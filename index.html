@@ -5,39 +5,38 @@
   <title>Safety Data Sheet Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body{ font-family:Arial, sans-serif; max-width:900px; margin:40px auto; padding:0 20px; }
-    h1{ margin-bottom:8px; }
-    p{ color:#444; }
-    ul{ line-height: 1.75; }
-    a{ color:#1a73e8; text-decoration:none; }
-    a:hover{ text-decoration:underline; }
+    :root { --max: 960px; --link: #1a73e8; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+           max-width: var(--max); margin: 40px auto; padding: 0 16px; }
+    h1 { margin: 0 0 8px 0; }
+    p.desc { color: #444; margin: 6px 0 16px 0; }
+    #search { padding: 10px 12px; width: 100%; max-width: 520px; border: 1px solid #ddd; border-radius: 8px; }
+    ul { list-style: none; padding-left: 0; margin: 18px 0 0 0; }
+    li { padding: 8px 0; border-bottom: 1px dashed #eee; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .muted { color:#666; font-size:12px; }
   </style>
 </head>
 <body>
+
   <h1>Safety Data Sheet Library</h1>
-  <p>Select a PDF file below:</p>
+  <p class="desc">Select a PDF file from the list below. (Tip: use the search box to filter.)</p>
 
-  <ul>
-    <!-- EXAMPLES: replace each href with your exact, URL-encoded filename (spaces -> %20) -->
-    <li>1. WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</li>
+  <input id="search" type="search" placeholder="Type to filter… (e.g., WD40, BELZONA, MOLYKOTE, EXWELL)" oninput="filterList()" />
 
-    <li>10. MSDS Exwell Spray Paint (4)</li>
+  <ul id="list">
+    <!-- 🔗 Use relative links. Make sure each filename matches EXACTLY the file in your repo -->
+    <li><a href="WD40-MultiUse-Aerosol-LowVOC-SDS.pdf" target="_blank" rel="noopener">WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
 
-    <li>11. BELZONA 1111 — MSDS BASE</li>
-    <li>12. BELZONA 1111 — MSDS SOLIDIFIER</li>
-    <li>13. BELZONA 5821 — MSDS BASE SILT GREY</li>
-    <li>14. BELZONA 5621 — MSDS SOLIDIFIER</li>
+    <li><a href="Acetone-MSDS.pdf" target="_blank" rel="noopener">Acetone — MSDS</a></li>
 
-    <li>Acetone — MSDS</li>
-    <li>Molyplate P37 500g — MSDS</li>
-    <li>Molyplate DC111 SQZ — SDS</li>
-    <li>Spotcheck SKC‑S — SDS</li>
-    <li>CRC Lectra Clean II</li>
-    <li>Degreaser HD — SDS</li>
-    <li>MOLYKOTE S5 — SDS</li>
-    <li>MSDS Exwell Paint Remover (1)</li>
-  </ul>
+    <li><a href="Molycote-P37-500g-MSDS.pdf" target="_blank" rel="noopener">Molycote P37 500g — MSDS</a></li>
+    <li><a href="Molycote-DC111-50Z-SDS.pdf" target="_blank" rel="noopener">Molycote DC111 50Z — SDS</a></li>
 
-  <p style="color:#666;font-size:12px">If a link doesn’t open, press <b>Ctrl+F5</b> (Windows) or <b>Cmd+Shift+R</b> (Mac) to hard‑refresh.</p>
-</body>
-</html>
+    <li><a href="Spotcheck-SKC-S-Aerosol-SDS.pdf" target="_blank" rel="noopener">Spotcheck SKC‑S — Aerosol SDS</a></li>
+
+    <li><a href="CRC-Lectra-Clean-II.pdf" target="_blank" rel="noopener">CRC Lectra Clean II</a></li>
+
+    <li><a href="Degreaser-HD-SDS.pdf" target="_blank" rel="noopener">Degreaser HD — SDS</a></li>
+
