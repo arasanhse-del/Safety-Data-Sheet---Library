@@ -40,3 +40,28 @@
 
     <li><a href="Degreaser-HD-SDS.pdf" target="_blank" rel="noopener">Degreaser HD — SDS</a></li>
 
+    <li><a href="Molykote-55-SDS.pdf" target="_blank" rel="noopener">MOLYKOTE 55 — SDS</a></li>
+
+    <li><a href="Exwell-Paint-Remover-MSDS.pdf" target="_blank" rel="noopener">Exwell Paint Remover — MSDS</a></li>
+    <li><a href="Exwell-Spray-Paint-MSDS.pdf" target="_blank" rel="noopener">Exwell Spray Paint — MSDS</a></li>
+
+    <li><a href="Belzona-1111-MSDS-Base.pdf" target="_blank" rel="noopener">BELZONA 1111 — MSDS BASE</a></li>
+    <li><a href="Belzona-1111-MSDS-Solidifier.pdf" target="_blank" rel="noopener">BELZONA 1111 — MSDS SOLIDIFIER</a></li>
+    <li><a href="Belzona-5821-MSDS-Base-SiltGrey.pdf" target="_blank" rel="noopener">BELZONA 5821 — MSDS BASE SILT GREY</a></li>
+    <li><a href="Belzona-5821-MSDS-Solidifier.pdf" target="_blank" rel="noopener">BELZONA 5821 — MSDS SOLIDIFIER</a></li>
+  </ul>
+
+  <p class="muted">If a link doesn’t open, press <strong>Ctrl+F5</strong> (Windows) or <strong>Cmd+Shift+R</strong> (Mac) to hard‑refresh.</p>
+
+  <script>
+    // Simple client-side filter
+    function filterList(){
+      const term = document.getElementById('search').value.trim().toLowerCase();
+      document.querySelectorAll('#list li').forEach(li => {
+        li.style.display = li.textContent.toLowerCase().includes(term) ? '' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
