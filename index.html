@@ -5,28 +5,74 @@
   <title>Safety Data Sheet Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root{ --link:#1a73e8; }
-    body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 960px; margin: 32px auto; padding: 0 16px; }
-    h1{ margin: 0 0 8px 0; }
-    p.desc{ color:#444; margin: 6px 0 18px 0; }
-    #search{ padding:10px 12px; width:100%; max-width:520px; border:1px solid #ddd; border-radius:8px; }
-    ul{ list-style:none; padding-left:0; margin-top:18px; }
-    li{ padding:8px 0; border-bottom:1px dashed #eee; }
-    a{ color:var(--link); text-decoration:none; }
+    body{ font-family:Arial, sans-serif; max-width:900px; margin:40px auto; padding:0 20px; }
+    h1{ margin-bottom:5px; }
+    #search{ padding:10px; width:100%; max-width:500px; border:1px solid #ccc; border-radius:6px; margin-bottom:20px; }
+    ul{ list-style:none; padding-left:0; }
+    li{ margin:10px 0; }
+    a{ color:#1a73e8; text-decoration:none; font-size:16px; }
     a:hover{ text-decoration:underline; }
-    .muted{ color:#666; font-size:12px; }
   </style>
 </head>
-<body>
-  <h1>Safety Data Sheet Library</h1>
-  <p class="desc">Select a PDF file from the list below. (Tip: use the search box to filter.)</p>
 
-  <input id="search" type="search" placeholder="Type to filter by filename… (e.g., BELZONA, WD‑40, MOLYKOTE)" oninput="filterList()" />
+<body>
+
+  <h1>Safety Data Sheet Library</h1>
+  <p>Select a PDF file below:</p>
+
+  <input id="search" type="search" placeholder="Search… (e.g., WD-40, BELZONA, MOLYKOTE)" oninput="filterList()"/>
 
   <ul id="list">
-    <!-- Each link points to the file served by GitHub Pages in the repo root -->
-    <li>1%20wd-40-multi-use-product-aerosol-low-voc-sds.pdf1. WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
 
-    <li>10.%20MSDS%20Exwell%20Spray%20Paint%20(4).pdf10. MSDS Exwell Spray Paint (4)</a></li>
+    <li>1%20wd-40-multi-use-product-aerosol-low-voc-sds.pdfWD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
 
-    <li>11.%20BELZONA%201111%20-%20MSDS%20BASE.pdf11. BELZONA 1111 — MSDS BASE</a></li>
+    <li>10.%20MSDS%20Exwell%20Spray%20Paint%20(4).pdfMSDS Exwell Spray Paint (4)</a></li>
+
+    <li>11.%20BELZONA%201111%20-%20MSDS%20BASE.pdfBELZONA 1111 — MSDS BASE</a></li>
+
+    <li>12.%20BELZONA%201111%20-%20MSDS%20SOLIDIFIER.pdfBELZONA 1111 — MSDS SOLIDIFIER</a></li>
+
+    <li>13.%20BELZONA%205821%20-%20MSDS%20BASE%20SILT%20GREY.pdfBELZONA 5821 — MSDS BASE SILT GREY</a></li>
+
+    <li>14.%20BELZONA%205621%20-%20MSDS%20SOLIDIFIER.pdfBELZONA 5621 — MSDS SOLIDIFIER</a></li>
+
+    <li>2.%20msds-acetone.pdfAcetone — MSDS</a></li>
+
+    <li>3.%20Molyplate-P37-500g-MSDS.pdfMolyplate P37 500g — MSDS</a></li>
+
+    <li>4.%20Molyplate%20DC111-SQZ_SDS.pdfMolyplate DC111 SQZ — SDS</a></li>
+
+    <li>5.%20Spotcheck-SKC-S-Aerosol-SDS-Rev-08-Jul-17.pdfSpotcheck SKC‑S — SDS</a></li>
+
+    <li>6.%20CRC%20Lectra%20Clean%20II.pdfCRC Lectra Clean II</a></li>
+
+    <li>7.%20Degreaser%20HD%20Sds.pdfDegreaser HD — SDS</a></li>
+
+    <li>8.%20MOLYKOTE%20S5%20SDS.pdfMOLYKOTE S5 — SDS</a></li>
+
+    <li>9.%20MSDS%20Exwell%20Paint%20Remover%20(1).pdfMSDS Exwell Paint Remover (1)</a></li>
+
+  </ul>
+
+<script>
+  const base = "https://arasanhse-del.github.io/Safety-Data-Sheet---Library/";
+
+  // FIX ALL LINKS AFTER PAGE LOAD
+  document.querySelectorAll("li").forEach(li => {
+      const text = li.textContent.trim();
+      const parts = text.split(/\.pdf/i); // split filename from label
+      const filename = parts[0] + ".pdf";
+      const label = text.replace(filename, "").trim();
+      li.innerHTML = `<a href="${base}${encodeURI(filename)}" target="_blank">${label}</a>`;
+  });
+
+  function filterList(){
+      const term = document.getElementById("search").value.toLowerCase();
+      document.querySelectorAll("#list li").forEach(li => {
+          li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none";
+      });
+  }
+</script>
+
+</body>
+</html>
