@@ -6,73 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body{ font-family:Arial, sans-serif; max-width:900px; margin:40px auto; padding:0 20px; }
-    h1{ margin-bottom:5px; }
-    #search{ padding:10px; width:100%; max-width:500px; border:1px solid #ccc; border-radius:6px; margin-bottom:20px; }
-    ul{ list-style:none; padding-left:0; }
-    li{ margin:10px 0; }
-    a{ color:#1a73e8; text-decoration:none; font-size:16px; }
+    h1{ margin-bottom:8px; }
+    p{ color:#444; }
+    ul{ line-height: 1.75; }
+    a{ color:#1a73e8; text-decoration:none; }
     a:hover{ text-decoration:underline; }
   </style>
 </head>
-
 <body>
-
   <h1>Safety Data Sheet Library</h1>
   <p>Select a PDF file below:</p>
 
-  <input id="search" type="search" placeholder="Search… (e.g., WD-40, BELZONA, MOLYKOTE)" oninput="filterList()"/>
+  <ul>
+    <!-- EXAMPLES: replace each href with your exact, URL-encoded filename (spaces -> %20) -->
+    <li>1. WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</li>
 
-  <ul id="list">
+    <li>10. MSDS Exwell Spray Paint (4)</li>
 
-    <li>1%20wd-40-multi-use-product-aerosol-low-voc-sds.pdfWD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
+    <li>11. BELZONA 1111 — MSDS BASE</li>
+    <li>12. BELZONA 1111 — MSDS SOLIDIFIER</li>
+    <li>13. BELZONA 5821 — MSDS BASE SILT GREY</li>
+    <li>14. BELZONA 5621 — MSDS SOLIDIFIER</li>
 
-    <li>10.%20MSDS%20Exwell%20Spray%20Paint%20(4).pdfMSDS Exwell Spray Paint (4)</a></li>
-
-    <li>11.%20BELZONA%201111%20-%20MSDS%20BASE.pdfBELZONA 1111 — MSDS BASE</a></li>
-
-    <li>12.%20BELZONA%201111%20-%20MSDS%20SOLIDIFIER.pdfBELZONA 1111 — MSDS SOLIDIFIER</a></li>
-
-    <li>13.%20BELZONA%205821%20-%20MSDS%20BASE%20SILT%20GREY.pdfBELZONA 5821 — MSDS BASE SILT GREY</a></li>
-
-    <li>14.%20BELZONA%205621%20-%20MSDS%20SOLIDIFIER.pdfBELZONA 5621 — MSDS SOLIDIFIER</a></li>
-
-    <li>2.%20msds-acetone.pdfAcetone — MSDS</a></li>
-
-    <li>3.%20Molyplate-P37-500g-MSDS.pdfMolyplate P37 500g — MSDS</a></li>
-
-    <li>4.%20Molyplate%20DC111-SQZ_SDS.pdfMolyplate DC111 SQZ — SDS</a></li>
-
-    <li>5.%20Spotcheck-SKC-S-Aerosol-SDS-Rev-08-Jul-17.pdfSpotcheck SKC‑S — SDS</a></li>
-
-    <li>6.%20CRC%20Lectra%20Clean%20II.pdfCRC Lectra Clean II</a></li>
-
-    <li>7.%20Degreaser%20HD%20Sds.pdfDegreaser HD — SDS</a></li>
-
-    <li>8.%20MOLYKOTE%20S5%20SDS.pdfMOLYKOTE S5 — SDS</a></li>
-
-    <li>9.%20MSDS%20Exwell%20Paint%20Remover%20(1).pdfMSDS Exwell Paint Remover (1)</a></li>
-
+    <li>Acetone — MSDS</li>
+    <li>Molyplate P37 500g — MSDS</li>
+    <li>Molyplate DC111 SQZ — SDS</li>
+    <li>Spotcheck SKC‑S — SDS</li>
+    <li>CRC Lectra Clean II</li>
+    <li>Degreaser HD — SDS</li>
+    <li>MOLYKOTE S5 — SDS</li>
+    <li>MSDS Exwell Paint Remover (1)</li>
   </ul>
 
-<script>
-  const base = "https://arasanhse-del.github.io/Safety-Data-Sheet---Library/";
-
-  // FIX ALL LINKS AFTER PAGE LOAD
-  document.querySelectorAll("li").forEach(li => {
-      const text = li.textContent.trim();
-      const parts = text.split(/\.pdf/i); // split filename from label
-      const filename = parts[0] + ".pdf";
-      const label = text.replace(filename, "").trim();
-      li.innerHTML = `<a href="${base}${encodeURI(filename)}" target="_blank">${label}</a>`;
-  });
-
-  function filterList(){
-      const term = document.getElementById("search").value.toLowerCase();
-      document.querySelectorAll("#list li").forEach(li => {
-          li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none";
-      });
-  }
-</script>
-
+  <p style="color:#666;font-size:12px">If a link doesn’t open, press <b>Ctrl+F5</b> (Windows) or <b>Cmd+Shift+R</b> (Mac) to hard‑refresh.</p>
 </body>
 </html>
