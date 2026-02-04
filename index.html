@@ -5,35 +5,89 @@
   <title>Safety Data Sheet Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: system-ui, Arial, sans-serif; max-width: 920px; margin: 32px auto; padding: 0 16px; }
-    h1 { margin-bottom: 6px; }
-    p { color:#444; }
-    ul { line-height: 1.7; }
-    a { color: #1a73e8; text-decoration: none; }
+    body { font-family: system-ui, Arial, sans-serif; max-width: 900px; margin: 32px auto; padding: 0 16px; }
+    h1 { margin-bottom: 8px; }
+    #status { color: #555; margin: 8px 0 16px; }
+    input[type="search"]{ padding:8px 10px; width:100%; max-width:420px; border:1px solid #ddd; border-radius:6px; }
+    ul { list-style: none; padding-left: 0; margin-top: 16px; }
+    li { margin: 8px 0; }
+    a { text-decoration: none; color: #1a73e8; }
     a:hover { text-decoration: underline; }
+    small { color:#666; }
   </style>
 </head>
 <body>
   <h1>Safety Data Sheet Library</h1>
-  <p>Welcome! Select a PDF file:</p>
+  <div id="status">Loading files…</div>
 
-  <ul>
-    <li><a href="1%20wd-40-multi-use-product-aerosol-low-voc-sds.pdf" target="_blank">1. WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
-    <li><a href="10.%20MSDS%20Exwell%20Spray%20Paint%20(4).pdf" target="_blank">10. MSDS Exwell Spray Paint (4)</a></li>
-    <li><a href="11.%20BELZONA%201111%20-%20MSDS%20BASE.pdf" target="_blank">11. BELZONA 1111 — MSDS BASE</a></li>
-    <li><a href="12.%20BELZONA%201111%20-%20MSDS%20SOLIDIFIER.pdf" target="_blank">12. BELZONA 1111 — MSDS SOLIDIFIER</a></li>
-    <li><a href="13.%20BELZONA%205821%20-%20MSDS%20BASE%20SILT%20GREY.pdf" target="_blank">13. BELZONA 5821 — MSDS BASE SILT GREY</a></li>
-    <li><a href="14.%20BELZONA%205621%20-%20MSDS%20SOLIDIFIER.pdf" target="_blank">14. BELZONA 5621 — MSDS SOLIDIFIER</a></li>
-    <li><a href="2.%20msds-acetone.pdf" target="_blank">2. MSDS — Acetone</a></li>
-    <li><a href="3.%20Molyplate-P37-500g-MSDS.pdf" target="_blank">3. Molyplate P37 500g — MSDS</a></li>
-    <li><a href="4.%20Molyplate%20DC111-SQZ_SDS.pdf" target="_blank">4. Molyplate DC111 SQZ — SDS</a></li>
-    <li><a href="5.%20Spotcheck-SKC-S-Aerosol-SDS-Rev-08-Jul-17.pdf" target="_blank">5. Spotcheck SKC‑S Aerosol — SDS (Rev‑08 Jul‑17)</a></li>
-    <li><a href="6.%20CRC%20Lectra%20Clean%20II.pdf" target="_blank">6. CRC Lectra Clean II</a></li>
-    <li><a href="7.%20Degreaser%20HD%20Sds.pdf" target="_blank">7. Degreaser HD — SDS</a></li>
-    <li><a href="8.%20MOLYKOTE%20S5%20SDS.pdf" target="_blank">8. MOLYKOTE S5 — SDS</a></li>
-    <li><a href="9.%20MSDS%20Exwell%20Paint%20Remover%20(1).pdf" target="_blank">9. MSDS — Exwell Paint Remover (1)</a></li>
-  </ul>
+  <label for="q"><strong>Search</strong></label><br/>
+  <input id="q" type="search" placeholder="Type to filter by filename…" />
 
-  <p><small>If a link doesn’t open, press <strong>Ctrl+F5</strong> to force refresh and try again.</small></p>
+  <ul id="list"></ul>
+
+  <script>
+    // ✅ Make sure these match your repo
+    const USERNAME = 'arasanhse-del';
+    const REPO     = 'Safety-Data-Sheet---Library';
+    const BRANCH   = 'main';
+
+    // GitHub REST Content API lists files in the repo root
+    const apiUrl    = `https://api.github.com/repos/${USERNAME}/${REPO}/contents/`;
+    // GitHub Pages base URL for this repo (serves files directly)
+    const pagesBase = `https://${USERNAME}.github.io/${REPO}/`;
+
+    const statusEl = document.getElementById('status');
+    const listEl   = document.getElementById('list');
+    const searchEl = document.getElementById('q');
+
+    function makeLink(name) {
+      const encoded = name.split('/').map(encodeURIComponent).join('/');
+      const url = pagesBase + encoded;
+      const li  = document.createElement('li');
+      const a   = document.createElement('a');
+      a.href    = url;
+      a.target  = '_blank';
+      a.rel     = 'noopener';
+      a.textContent = name;
+      li.appendChild(a);
+      return li;
+    }
+
+    function filterList() {
+      const term = searchEl.value.trim().toLowerCase();
+      Array.from(listEl.children).forEach(li => {
+        const text = li.textContent.toLowerCase();
+        li.style.display = text.includes(term) ? '' : 'none';
+      });
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github+json' }});
+        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+        const items = await res.json();
+
+        const pdfs = items
+          .filter(x => x.type === 'file' && /\.pdf$/i.test(x.name))
+          .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+        listEl.innerHTML = '';
+        if (pdfs.length === 0) {
+          statusEl.textContent = 'No PDF files found in the repository.';
+          return;
+        }
+
+        pdfs.forEach(f => listEl.appendChild(makeLink(f.name)));
+        statusEl.innerHTML = `Found <strong>${pdfs.length}</strong> PDF file(s).`;
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Could not load file list. Please refresh or check repository visibility.';
+      }
+    }
+
+    searchEl.addEventListener('input', filterList);
+    load();
+  </script>
 </body>
 </html>
+``
