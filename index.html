@@ -5,89 +5,28 @@
   <title>Safety Data Sheet Library</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body { font-family: system-ui, Arial, sans-serif; max-width: 900px; margin: 32px auto; padding: 0 16px; }
-    h1 { margin-bottom: 8px; }
-    #status { color: #555; margin: 8px 0 16px; }
-    input[type="search"]{ padding:8px 10px; width:100%; max-width:420px; border:1px solid #ddd; border-radius:6px; }
-    ul { list-style: none; padding-left: 0; margin-top: 16px; }
-    li { margin: 8px 0; }
-    a { text-decoration: none; color: #1a73e8; }
-    a:hover { text-decoration: underline; }
-    small { color:#666; }
+    :root{ --link:#1a73e8; }
+    body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 960px; margin: 32px auto; padding: 0 16px; }
+    h1{ margin: 0 0 8px 0; }
+    p.desc{ color:#444; margin: 6px 0 18px 0; }
+    #search{ padding:10px 12px; width:100%; max-width:520px; border:1px solid #ddd; border-radius:8px; }
+    ul{ list-style:none; padding-left:0; margin-top:18px; }
+    li{ padding:8px 0; border-bottom:1px dashed #eee; }
+    a{ color:var(--link); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    .muted{ color:#666; font-size:12px; }
   </style>
 </head>
 <body>
   <h1>Safety Data Sheet Library</h1>
-  <div id="status">Loading files…</div>
+  <p class="desc">Select a PDF file from the list below. (Tip: use the search box to filter.)</p>
 
-  <label for="q"><strong>Search</strong></label><br/>
-  <input id="q" type="search" placeholder="Type to filter by filename…" />
+  <input id="search" type="search" placeholder="Type to filter by filename… (e.g., BELZONA, WD‑40, MOLYKOTE)" oninput="filterList()" />
 
-  <ul id="list"></ul>
+  <ul id="list">
+    <!-- Each link points to the file served by GitHub Pages in the repo root -->
+    <li>1%20wd-40-multi-use-product-aerosol-low-voc-sds.pdf1. WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
 
-  <script>
-    // ✅ Make sure these match your repo
-    const USERNAME = 'arasanhse-del';
-    const REPO     = 'Safety-Data-Sheet---Library';
-    const BRANCH   = 'main';
+    <li>10.%20MSDS%20Exwell%20Spray%20Paint%20(4).pdf10. MSDS Exwell Spray Paint (4)</a></li>
 
-    // GitHub REST Content API lists files in the repo root
-    const apiUrl    = `https://api.github.com/repos/${USERNAME}/${REPO}/contents/`;
-    // GitHub Pages base URL for this repo (serves files directly)
-    const pagesBase = `https://${USERNAME}.github.io/${REPO}/`;
-
-    const statusEl = document.getElementById('status');
-    const listEl   = document.getElementById('list');
-    const searchEl = document.getElementById('q');
-
-    function makeLink(name) {
-      const encoded = name.split('/').map(encodeURIComponent).join('/');
-      const url = pagesBase + encoded;
-      const li  = document.createElement('li');
-      const a   = document.createElement('a');
-      a.href    = url;
-      a.target  = '_blank';
-      a.rel     = 'noopener';
-      a.textContent = name;
-      li.appendChild(a);
-      return li;
-    }
-
-    function filterList() {
-      const term = searchEl.value.trim().toLowerCase();
-      Array.from(listEl.children).forEach(li => {
-        const text = li.textContent.toLowerCase();
-        li.style.display = text.includes(term) ? '' : 'none';
-      });
-    }
-
-    async function load() {
-      try {
-        const res = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github+json' }});
-        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
-        const items = await res.json();
-
-        const pdfs = items
-          .filter(x => x.type === 'file' && /\.pdf$/i.test(x.name))
-          .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
-
-        listEl.innerHTML = '';
-        if (pdfs.length === 0) {
-          statusEl.textContent = 'No PDF files found in the repository.';
-          return;
-        }
-
-        pdfs.forEach(f => listEl.appendChild(makeLink(f.name)));
-        statusEl.innerHTML = `Found <strong>${pdfs.length}</strong> PDF file(s).`;
-      } catch (err) {
-        console.error(err);
-        statusEl.textContent = 'Could not load file list. Please refresh or check repository visibility.';
-      }
-    }
-
-    searchEl.addEventListener('input', filterList);
-    load();
-  </script>
-</body>
-</html>
-``
+    <li>11.%20BELZONA%201111%20-%20MSDS%20BASE.pdf11. BELZONA 1111 — MSDS BASE</a></li>
