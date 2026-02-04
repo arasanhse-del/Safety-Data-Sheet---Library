@@ -1,27 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Safety Data Sheet Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; max-width: 900px; margin: 32px auto; padding: 0 16px; }
+    h1 { margin-bottom: 8px; }
+    #status { color: #555; margin: 8px 0 16px; }
+    input[type="search"]{ padding:8px 10px; width:100%; max-width:420px; border:1px solid #ddd; border-radius:6px; }
+    ul { list-style: none; padding-left: 0; margin-top: 16px; }
+    li { margin: 8px 0; }
+    a { text-decoration: none; color: #1a73e8; }
+    a:hover { text-decoration: underline; }
+    small { color:#666; }
+  </style>
 </head>
 <body>
   <h1>Safety Data Sheet Library</h1>
-  <p>Select a file to view:</p>
+  <div id="status">Loading files…</div>
 
-  <ul>
-    <li><a href="1%20wd-40-multi-use-product-aerosol-low-voc.pdf">WD-40 Multi‑Use Product</a></li>
-    <li><a href="2%20MSDS%20Exxel%20Spray%20Paint%20(pdf)">MSDS Exxel Spray Paint</a></li>
-    <li><a href="11.%20BELZONA%201111%20-%20MSDS.pdf">Belzona 1111 MSDS</a></li>
-    <li><a href="11.%20BELZONA%201111%20-%20MSDS%20SOLDEF.pdf">Belzona 1111 Soldef</a></li>
-    <li><a href="11.%20BELZONA%205811%20-%20MSDS%20BST%20GREY.pdf">Belzona 5811 BST Grey</a></li>
-    <li><a href="11.%20BELZONA%209421%20-%20MSDS%20Part%20A.pdf">Belzona 9421 Part A</a></li>
-    <li><a href="3.%20Molyplate%20P37-500g%20MSDS.pdf">Molyplate P37</a></li>
-    <li><a href="4.%20Molyplate%20D1111%203L%20SDS%202020.pdf">Molyplate D1111 SDS</a></li>
-    <li><a href="5.%20Spectolube%20SXC-S%20MSDS%20(Rev-08)-1.pdf">Spectolube SXC‑S</a></li>
-    <li><a href="6.%20CRC%20lectra%20Clean%20(pdf)">CRC Lectra Clean</a></li>
-    <li><a href="7.%20Zepreserve%20HD%20SDS.pdf">Zepreserve HD SDS</a></li>
-    <li><a href="8.%20MOLYKOTE%20S5%20SDS.pdf">Molykote S5</a></li>
-    <li><a href="9.%20MSDS%20Exxel%20Paint%20Remover%20(1).pdf">Exxel Paint Remover</a></li>
-  </ul>
+  <label for="q"><strong>Search</strong></label><br/>
+  <input id="q" type="search" placeholder="Type to filter by filename…" />
 
+  <ul id="list"></ul>
+
+  <script>
+    // 👉 Set these two values to your repo details
+    const USERNAME = 'arasanishe-dl';
+    const REPO     = 'Safety-Data-Sheet---Library';
+    const BRANCH   = 'main';
+
+    const apiUrl   = `https://api.github.com/repos/${USERNAME}/${REPO}/contents/`;
+    const pagesBase= `https://${USERNAME}.github.io/${REPO}/`;
+
+    const statusEl = document.getElementById('status');
+    const listEl   = document.getElementById('list');
+    const searchEl = document.getElementById('q');
+
+    function makeLink(name) {
+      // Create a safe, encoded URL for the raw file served by GitHub Pages
+      const encoded = name.split('/').map(encodeURIComponent).join('/');
+      const url = pagesBase + encoded;
+      const li  = document.createElement('li');
+      const a   = document.createElement('a');
+      a.href    = url;
+      a.target  = '_blank';
+      a.rel     = 'noopener';
+      a.textContent = name;
+      li.appendChild(a);
+      return li;
+    }
+
+    function filterList() {
+      const term = searchEl.value.trim().toLowerCase();
+      Array.from(listEl.children).forEach(li => {
+        const text = li.textContent.toLowerCase();
+        li.style.display = text.includes(term) ? '' : 'none';
+      });
+    }
+
+    async function load() {
+      try {
+        const res = await fetch(apiUrl, { headers: { 'Accept': 'application/vnd.github+json' }});
+        if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+        const items = await res.json();
+
+        const pdfs = items
+          .filter(x => x.type === 'file' && /\.pdf$/i.test(x.name))
+          // Optional: natural-ish sorting
+          .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+
+        listEl.innerHTML = '';
+        if (pdfs.length === 0) {
+          statusEl.textContent = 'No PDF files found in the repository.';
+          return;
+        }
+
+        pdfs.forEach(f => listEl.appendChild(makeLink(f.name)));
+        statusEl.innerHTML = `Found <strong>${pdfs.length}</strong> PDF file(s).`;
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Could not load file list. Please refresh or check repository visibility.';
+      }
+    }
+
+    searchEl.addEventListener('input', filterList);
+    load();
+  </script>
 </body>
 </html>
