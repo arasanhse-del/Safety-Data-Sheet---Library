@@ -6,13 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root { --max: 960px; --link: #1a73e8; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-           max-width: var(--max); margin: 40px auto; padding: 0 16px; }
+    body { 
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      max-width: var(--max); 
+      margin: 40px auto; 
+      padding: 0 16px;
+    }
     h1 { margin: 0 0 8px 0; }
     p.desc { color: #444; margin: 6px 0 16px 0; }
-    #search { padding: 10px 12px; width: 100%; max-width: 520px; border: 1px solid #ddd; border-radius: 8px; }
-    ul { list-style: none; padding-left: 0; margin: 18px 0 0 0; }
-    li { padding: 8px 0; border-bottom: 1px dashed #eee; }
+    #search { 
+      padding: 10px 12px; 
+      width: 100%; 
+      max-width: 520px; 
+      border: 1px solid #ddd; 
+      border-radius: 8px; 
+    }
+    ul { 
+      list-style: none; 
+      padding-left: 0; 
+      margin: 18px 0 0 0; 
+    }
+    li { 
+      padding: 8px 0; 
+      border-bottom: 1px dashed #eee; 
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .muted { color:#666; font-size:12px; }
@@ -23,35 +40,87 @@
   <h1>Safety Data Sheet Library</h1>
   <p class="desc">Select a PDF file from the list below. (Tip: use the search box to filter.)</p>
 
-  <input id="search" type="search" placeholder="Type to filter… (e.g., WD40, BELZONA, MOLYKOTE, EXWELL)" oninput="filterList()" />
+  <input 
+    id="search" 
+    type="search" 
+    placeholder="Type to filter… (e.g., WD40, BELZONA, MOLYKOTE, EXWELL)" 
+    oninput="filterList()" 
+  />
 
   <ul id="list">
-    <!-- 🔗 Use relative links. Make sure each filename matches EXACTLY the file in your repo -->
-    <li><a href="WD40-MultiUse-Aerosol-LowVOC-SDS.pdf" target="_blank" rel="noopener">WD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
 
-    <li><a href="Acetone-MSDS.pdf" target="_blank" rel="noopener">Acetone — MSDS</a></li>
+    <!-- ========================= -->
+    <!-- EXISTING SDS FILES (YOURS) -->
+    <!-- ========================= -->
 
-    <li><a href="Molycote-P37-500g-MSDS.pdf" target="_blank" rel="noopener">Molycote P37 500g — MSDS</a></li>
-    <li><a href="Molycote-DC111-50Z-SDS.pdf" target="_blank" rel="noopener">Molycote DC111 50Z — SDS</a></li>
+    <li>WD40-MultiUse-Aerosol-LowVOC-SDS.pdfWD‑40 Multi‑Use Product (Aerosol Low VOC) — SDS</a></li>
 
-    <li><a href="Spotcheck-SKC-S-Aerosol-SDS.pdf" target="_blank" rel="noopener">Spotcheck SKC‑S — Aerosol SDS</a></li>
+    <li>Acetone-MSDS.pdfAcetone — MSDS</a></li>
 
-    <li><a href="CRC-Lectra-Clean-II.pdf" target="_blank" rel="noopener">CRC Lectra Clean II</a></li>
+    <li>Molycote-P37-500g-MSDS.pdfMolycote P37 500g — MSDS</a></li>
+    <li>Molycote-DC111-50Z-SDS.pdfMolycote DC111 50Z — SDS</a></li>
 
-    <li><a href="Degreaser-HD-SDS.pdf" target="_blank" rel="noopener">Degreaser HD — SDS</a></li>
+    <li>Spotcheck-SKC-S-Aerosol-SDS.pdfSpotcheck SKC‑S — Aerosol SDS</a></li>
 
-    <li><a href="Molykote-55-SDS.pdf" target="_blank" rel="noopener">MOLYKOTE 55 — SDS</a></li>
+    <li>CRC-Lectra-Clean-II.pdfCRC Lectra Clean II</a></li>
 
-    <li><a href="Exwell-Paint-Remover-MSDS.pdf" target="_blank" rel="noopener">Exwell Paint Remover — MSDS</a></li>
-    <li><a href="Exwell-Spray-Paint-MSDS.pdf" target="_blank" rel="noopener">Exwell Spray Paint — MSDS</a></li>
+    <li>Degreaser-HD-SDS.pdfDegreaser HD — SDS</a></li>
 
-    <li><a href="Belzona-1111-MSDS-Base.pdf" target="_blank" rel="noopener">BELZONA 1111 — MSDS BASE</a></li>
-    <li><a href="Belzona-1111-MSDS-Solidifier.pdf" target="_blank" rel="noopener">BELZONA 1111 — MSDS SOLIDIFIER</a></li>
-    <li><a href="Belzona-5821-MSDS-Base-SiltGrey.pdf" target="_blank" rel="noopener">BELZONA 5821 — MSDS BASE SILT GREY</a></li>
-    <li><a href="Belzona-5821-MSDS-Solidifier.pdf" target="_blank" rel="noopener">BELZONA 5821 — MSDS SOLIDIFIER</a></li>
+    <li>Molykote-55-SDS.pdfMOLYKOTE 55 — SDS</a></li>
+
+    <li>Exwell-Paint-Remover-MSDS.pdfExwell Paint Remover — MSDS</a></li>
+    <li>Exwell-Spray-Paint-MSDS.pdfExwell Spray Paint — MSDS</a></li>
+
+    <li>Belzona-1111-MSDS-Base.pdfBELZONA 1111 — MSDS BASE</a></li>
+    <li>Belzona-1111-MSDS-Solidifier.pdfBELZONA 1111 — MSDS SOLIDIFIER</a></li>
+    <li>Belzona-5821-MSDS-Base-SiltGrey.pdfBELZONA 5821 — MSDS BASE SILT GREY</a></li>
+    <li>Belzona-5821-MSDS-Solidifier.pdfBELZONA 5821 — MSDS SOLIDIFIER</a></li>
+
+
+    <!-- ========================= -->
+    <!-- NEW SDS FILES ADDED TODAY -->
+    <!-- ========================= -->
+
+    <li>ABRO-Grinding-Paste.pdfABRO Grinding Paste — SDS</a></li>
+
+    <li>CRC-SP-400-SDS.pdfCRC SP 400 — SDS</a></li>
+
+    <li>HYLOMAR-JOINTING-COMPOUND.pdfHYLOMAR Jointing Compound — SDS</a></li>
+
+    <li>Loctite-243-Thread-locker.pdfLoctite 243 Thread Locker — SDS</a></li>
+
+    <li>LOCTITE-515-FLANGE-SEALANT.pdfLOCTITE 515 Flange Sealant — SDS</a></li>
+
+    <li>LOCTITE-567-THREAD-SEALANT.pdfLOCTITE 567 Thread Sealant — SDS</a></li>
+
+    <li>Loctite-577.PDFLoctite 577 — SDS</a></li>
+
+    <li>LOCTITE-2701.PDFLOCTITE 2701 — SDS</a></li>
+
+    <li>LOCTITE-596.pdfLOCTITE 596 — SDS</a></li>
+
+    <li>MOLYKOTE-55-SDS.pdfMOLYKOTE 55 — SDS</a></li>
+
+    <li>RTV-GASKET-MAKER-PERMATEX.pdfPermatex RTV Gasket Maker — SDS</a></li>
+
+    <li>SDS-650F+-Red-RTV.pdfSDS 650F+ Red RTV — SDS</a></li>
+
+    <li>SKD-S2-SDS.pdfSKD S2 — SDS</a></li>
+
+    <li>SKL-WP2.pdfSKL WP2 — SDS</a></li>
+
+    <li>Super-Glue-SDS.pdfSuper Glue — SDS</a></li>
+
+    <li>Thinner-SDS-ORYX.pdfThinner ORYX — SDS</a></li>
+
+    <li>WINKEL-PRO-2W22.pdfWINKEL PRO 2W22 — SDS</a></li>
+
   </ul>
 
-  <p class="muted">If a link doesn’t open, press <strong>Ctrl+F5</strong> (Windows) or <strong>Cmd+Shift+R</strong> (Mac) to hard‑refresh.</p>
+  <p class="muted">
+    If a link doesn’t open, press <strong>Ctrl+F5</strong> (Windows) or 
+    <strong>Cmd+Shift+R</strong> (Mac) to hard‑refresh.
+  </p>
 
   <script>
     // Simple client-side filter
